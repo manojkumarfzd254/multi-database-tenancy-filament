@@ -4,6 +4,7 @@ namespace App\Filament\Pages;
 
 use App\Models\Country;
 use App\Models\State;
+use App\Models\Tenant;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\MarkdownEditor;
@@ -20,6 +21,7 @@ use Filament\Forms\Form;
 use Illuminate\Contracts\View\View;
 use Filament\Support\Enums\MaxWidth;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\HtmlString;
 use Ysfkaya\FilamentPhoneInput\Forms\PhoneInput;
 use Ysfkaya\FilamentPhoneInput\PhoneInputNumberType;
@@ -146,7 +148,7 @@ class CompanyRegistration extends SimplePage implements HasForms
                                 ->label('Upload Logo')
                                 ->image()
                                 ->required()
-                                ->directory('uploads/files'),
+                                ->directory('uploads/company/logo'),
                                 Select::make('area_of_business')
                                     ->label('Area of Business')
                                     ->required()
@@ -179,8 +181,26 @@ class CompanyRegistration extends SimplePage implements HasForms
         ];
     }
 
-    public function create(): void
+    public function create()
     {
-        dd($this->form->getState());
+        $input = $this->form->getState()['data'];
+        $tenant = new Tenant();
+        $tenant->name = $input['name'];
+        $tenant->email = $input['email'];
+        $tenant->password = Hash::make($input['password']);
+        $tenant->mobile_number = $input['mobile_number'];
+        $tenant->landline_number = $input['landline_number'];
+        $tenant->company_address = $input['company_address'];
+        $tenant->company_owner_name = $input['company_owner_name'];
+        $tenant->owner_email = $input['owner_email'];
+        $tenant->country_id = $input['country_id'];
+        $tenant->state_id = $input['state_id'];
+        $tenant->company_logo = $input['company_logo'];
+        $tenant->area_of_business = $input['area_of_business'];
+        $tenant->save();
+        $tenant->domains()->create([
+            'domain' => $this->data['domain'].".hr_management.test",
+        ]);
+        return redirect()->to("http://" . $this->data['domain'] . ".hr_management.test/client/login");
     }
 }
