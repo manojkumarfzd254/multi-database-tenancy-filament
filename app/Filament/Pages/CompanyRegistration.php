@@ -99,7 +99,6 @@ class CompanyRegistration extends SimplePage implements HasForms
                 ->icon('heroicon-m-map-pin')
                     ->schema([
                         TextInput::make('company_address')
-                            ->url()
                             ->required()
                             ->prefixIcon('heroicon-m-map-pin'),
                         Grid::make()
