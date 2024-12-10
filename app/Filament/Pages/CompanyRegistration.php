@@ -2,8 +2,12 @@
 
 namespace App\Filament\Pages;
 
+use App\Models\Country;
+use App\Models\State;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\MarkdownEditor;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Wizard;
 use Filament\Forms\Components\Wizard\Step;
@@ -115,13 +119,52 @@ class CompanyRegistration extends SimplePage implements HasForms
                                     ->prefixIcon('heroicon-m-envelope')
                                     ->email()
                                     ->maxLength(255),
+                                Select::make('country_id')
+                                    ->label('Country')
+                                    ->required()
+                                    ->options(Country::all()->pluck('name', 'id'))
+                                    ->afterStateUpdated(fn(callable $set) => $set('state_id', null))
+                                    ->reactive()
+                                    ->searchable(),
+                                Select::make('state_id')
+                                    ->label('State')
+                                    ->options(fn (callable $get) => State::where('country_id', $get('country_id'))->pluck('name', 'id'))
+                                    ->searchable()
+                                    ->required()
+                                    ->reactive()
                             ])
                     ]),
                 Step::make('Business Details')
                     ->completedIcon('heroicon-m-hand-thumb-up')
                     ->icon('heroicon-m-clipboard-document-list')
                         ->schema([
-                            
+                           
+                        Grid::make()
+                            ->columns(2)
+                            ->schema([
+                                FileUpload::make('company_logo')
+                                ->label('Upload Logo')
+                                ->image()
+                                ->required()
+                                ->directory('uploads/files'),
+                                Select::make('area_of_business')
+                                    ->label('Area of Business')
+                                    ->required()
+                                    ->searchable()
+                                    ->options([
+                                        "Construction" => "Construction",
+                                        "Consulting" => "Consulting",
+                                        "Education" => "Education",
+                                        "Finance" => "Finance",
+                                        "Healthcare" => "Healthcare",
+                                        "Hospitality" => "Hospitality",
+                                        "Real Estate" => "Real Estate",
+                                        "Retail" => "Retail",
+                                        "IT Service" => "IT Service",
+                                        "Others" => "Others",
+                                    ])
+                            ])
+
                     ]),
             ])
             ->submitAction(new HtmlString(Blade::render(<<<BLADE
