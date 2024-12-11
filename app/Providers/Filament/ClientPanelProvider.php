@@ -25,7 +25,6 @@ class ClientPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
-        // dd(tenant('id'));
         return $panel
             ->id('client')
             ->path('client')

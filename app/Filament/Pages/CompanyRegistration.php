@@ -18,6 +18,7 @@ use Filament\Pages\Page;
 use Filament\Pages\SimplePage;
 use Livewire\Component;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Filament\Support\Enums\MaxWidth;
 use Illuminate\Support\Facades\Blade;
@@ -56,7 +57,7 @@ class CompanyRegistration extends SimplePage implements HasForms
                         TextInput::make('domain')
                             ->required()
                             ->prefix('https://')
-                            ->suffix('.hr_management.test')
+                            ->suffix('.'.config('tenancy.central_domains')[0])
                             ->suffixIcon('heroicon-m-globe-alt'),
                             
                         Grid::make()
@@ -199,8 +200,15 @@ class CompanyRegistration extends SimplePage implements HasForms
         $tenant->area_of_business = $input['area_of_business'];
         $tenant->save();
         $tenant->domains()->create([
-            'domain' => $this->data['domain'].".hr_management.test",
+            'domain' => $this->data['domain'].".".config('tenancy.central_domains')[0],
         ]);
-        return redirect()->to("http://" . $this->data['domain'] . ".hr_management.test/client/login");
+
+        Notification::make()
+            ->title('Success')
+            ->success()
+            ->body('Your registration was successfully please log in.')
+            ->send();
+
+        return redirect()->to("http://" . $this->data['domain'] . ".".config('tenancy.central_domains')[0]."/client/login");
     }
 }

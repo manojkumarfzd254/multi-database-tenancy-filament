@@ -29,6 +29,13 @@ class CreateTenantUser implements ShouldQueue
                 'name' => $this->tenant->name,
                 'email' => $this->tenant->email,
                 'password' => $this->tenant->password,
+                'mobile_number' => $this->tenant->mobile_number,
+                'landline_number' => $this->tenant->landline_number,
+                'company_address' => $this->tenant->company_address,
+                'company_owner_name' => $this->tenant->company_owner_name,
+                'owner_email' => $this->tenant->owner_email,
+                'company_logo' => $this->tenant->company_logo,
+                'area_of_business' => $this->tenant->area_of_business,
             ]);
         });
     }
