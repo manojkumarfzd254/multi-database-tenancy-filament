@@ -4,6 +4,7 @@ namespace App\Filament\Client\Resources;
 
 use App\Filament\Client\Resources\UserResource\Pages;
 use App\Filament\Client\Resources\UserResource\RelationManagers;
+use App\Models\Role;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -17,7 +18,9 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationGroup = "Filament Shield";
+
+    protected static ?string $navigationIcon = 'heroicon-o-users';
 
     public static function form(Form $form): Form
     {
@@ -35,6 +38,12 @@ class UserResource extends Resource
                     ->password()
                     ->required()
                     ->maxLength(255),
+                Forms\Components\Select::make('roles')
+                    ->searchable()
+                    ->relationship('roles', 'name') // Define relationship if you have it
+                    ->options(Role::all()->pluck('name', 'id')->toArray())
+                    ->preload()
+                    ->label('Roles'),
             ]);
     }
 
@@ -46,6 +55,15 @@ class UserResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),
+                Tables\Columns\BadgeColumn::make('roles.name')
+                    ->label('Roles')
+                    ->colors([
+                        'primary'  => fn ($state): bool => $state === 'Admin',
+                        'secondary' => fn ($state): bool => $state === 'panel',
+                        // Add custom color logic if needed
+                    ])
+                    ->formatStateUsing(fn ($state) => is_array($state) ? implode(', ', $state) : $state)
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('email_verified_at')
                     ->dateTime()
                     ->sortable(),

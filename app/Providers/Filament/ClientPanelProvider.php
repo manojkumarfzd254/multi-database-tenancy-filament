@@ -3,6 +3,7 @@
 namespace App\Providers\Filament;
 
 use App\Providers\TenancyServiceProvider;
+use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -52,6 +53,10 @@ class ClientPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
+            ])
+            ->plugins([
+                FilamentShieldPlugin::make(),
+                \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make(),
             ])
             ->middleware([
                 'universal',
