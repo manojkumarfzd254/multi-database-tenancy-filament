@@ -21,6 +21,7 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
+use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
 
 class ClientPanelProvider extends PanelProvider
 {
@@ -55,8 +56,30 @@ class ClientPanelProvider extends PanelProvider
                 DispatchServingFilamentEvent::class,
             ])
             ->plugins([
-                FilamentShieldPlugin::make(),
-                \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make(),
+                FilamentShieldPlugin::make() // Use this once
+                    ->gridColumns([
+                        'default' => 1,
+                        'sm' => 2,
+                        'lg' => 3
+                    ])
+                    ->sectionColumnSpan(1)
+                    ->checkboxListColumns([
+                        'default' => 1,
+                        'sm' => 2,
+                        'lg' => 2,
+                    ])
+                    ->resourceCheckboxListColumns([
+                        'default' => 1,
+                        'sm' => 2,
+                    ]),
+                    FilamentEditProfilePlugin::make()
+                    ->setIcon('heroicon-o-user')
+                    ->setSort(1)
+                    // ->slug('my-profile')
+                    ->setTitle('My Profile')
+                    // ->setNavigationLabel('My Profile')
+                    // ->shouldShowDeleteAccountForm(false)
+                    ->setNavigationGroup('Filament Shield'),
             ])
             ->middleware([
                 'universal',

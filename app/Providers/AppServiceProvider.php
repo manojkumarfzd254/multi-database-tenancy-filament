@@ -21,6 +21,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Filament::serving(function () {
+            Filament::registerUserMenuItems([
+                'Profile' => UserMenuItem::make()
+                    ->label('My Profile')
+                    ->url(route('filament.admin.pages.edit-profile')) // Adjust this URL as per your route setup
+                    ->icon('heroicon-o-user'),
+            ]);
+        });
     }
 }
