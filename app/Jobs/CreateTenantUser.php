@@ -33,6 +33,8 @@ class CreateTenantUser implements ShouldQueue
                 'landline_number' => $this->tenant->landline_number,
                 'company_address' => $this->tenant->company_address,
                 'company_owner_name' => $this->tenant->company_owner_name,
+                'country_id' => $this->tenant->country_id,
+                'state_id' => $this->tenant->state_id,
                 'owner_email' => $this->tenant->owner_email,
                 'company_logo' => $this->tenant->company_logo,
                 'area_of_business' => $this->tenant->area_of_business,

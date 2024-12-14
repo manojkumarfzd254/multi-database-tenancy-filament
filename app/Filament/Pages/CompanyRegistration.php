@@ -7,25 +7,18 @@ use App\Models\State;
 use App\Models\Tenant;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Wizard;
 use Filament\Forms\Components\Wizard\Step;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Pages\Page;
 use Filament\Pages\SimplePage;
-use Livewire\Component;
-use Filament\Forms\Form;
 use Filament\Notifications\Notification;
-use Illuminate\Contracts\View\View;
-use Filament\Support\Enums\MaxWidth;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\HtmlString;
 use Ysfkaya\FilamentPhoneInput\Forms\PhoneInput;
-use Ysfkaya\FilamentPhoneInput\PhoneInputNumberType;
 
 class CompanyRegistration extends SimplePage implements HasForms
 {
@@ -188,7 +181,7 @@ class CompanyRegistration extends SimplePage implements HasForms
         $tenant = new Tenant();
         $tenant->name = $input['name'];
         $tenant->email = $input['email'];
-        $tenant->password = Hash::make($input['password']);
+        $tenant->password = $input['password'];
         $tenant->mobile_number = $input['mobile_number'];
         $tenant->landline_number = $input['landline_number'];
         $tenant->company_address = $input['company_address'];
