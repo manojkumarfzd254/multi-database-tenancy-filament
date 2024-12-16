@@ -28,8 +28,8 @@ class CreateTenantsTable extends Migration
             $table->string('owner_email')->nullable();
             $table->unsignedBigInteger('country_id')->nullable();
             $table->unsignedBigInteger('state_id')->nullable();
-            $table->foreign('country_id')->references('id')->on('countries')->onDelete('cascade');
-            $table->foreign('state_id')->references('id')->on('states')->onDelete('cascade');
+            $table->integer('country_id');
+            $table->integer('state_id');
             $table->text('company_logo')->nullable();
             $table->string('area_of_business')->nullable();
             

@@ -15,6 +15,7 @@ use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Pages\SimplePage;
 use Filament\Notifications\Notification;
+use Filament\Support\Enums\MaxWidth;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\HtmlString;
@@ -29,6 +30,7 @@ class CompanyRegistration extends SimplePage implements HasForms
     protected static string $view = 'filament.pages.company-registration';
     // protected static ?string $title = 'A Step closer to managing your company effectively.';
     protected ?string $heading = 'SOMS Registration';
+    protected ?string $maxContentWidth = 'full';
     protected ?string $subheading = 'A Step closer to managing your company effectively.';
 
     public ?array $data = [];
@@ -37,7 +39,7 @@ class CompanyRegistration extends SimplePage implements HasForms
     {
         $this->form->fill();
     }
-
+    
     public function getFormSchema(): array
     {
         return [
@@ -204,4 +206,9 @@ class CompanyRegistration extends SimplePage implements HasForms
 
         return redirect()->to("http://" . $this->data['domain'] . ".".config('tenancy.central_domains')[0]."/client/login");
     }
+
+    // public function getMaxContentWidth(): MaxWidth
+    // {
+    //     return MaxWidth::FiveExtraLarge; 
+    // }
 }
