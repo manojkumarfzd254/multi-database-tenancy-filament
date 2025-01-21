@@ -31,6 +31,17 @@ class User extends Authenticatable implements FilamentUser
         'name',
         'email',
         'password',
+        'last_name',
+        'profile_image',
+        'date_of_birth',
+        'gender',
+        'personal_contact_number',
+        'emergency_contact_number',
+        'adhar_card_number',
+        'pan_card_number',
+        'address',
+        'hire_date',
+        'probation_period',
     ];
 
     /**

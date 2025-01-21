@@ -13,21 +13,21 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name',50);
+            $table->string('last_name',50)->nullable();
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-
-            $table->string('mobile_number')->nullable();
-            $table->string('landline_number')->nullable();
-            $table->text('company_address')->nullable();
-            $table->string('company_owner_name')->nullable();
-            $table->string('owner_email')->nullable();
-            $table->unsignedBigInteger('country_id')->nullable();
-            $table->unsignedBigInteger('state_id')->nullable();
-            $table->text('company_logo')->nullable();
-            $table->string('area_of_business')->nullable();
-
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('profile_image',500)->nullable();
+            $table->date('date_of_birth')->nullable();
+            $table->enum('gender',['male','female','others'])->nullable();
+            $table->unsignedBigInteger('personal_contact_number')->nullable();
+            $table->unsignedBigInteger('emergency_contact_number')->nullable();
+            $table->unsignedBigInteger('adhar_card_number')->nullable();
+            $table->string('pan_card_number',15)->nullable();
+            $table->string('address',200)->nullable();
+            $table->date('hire_date')->nullable();
+            $table->string('probation_period',25)->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

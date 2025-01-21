@@ -18,7 +18,6 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
     protected static ?string $navigationGroup = "Filament Shield";
-
     protected static ?string $navigationIcon = 'heroicon-o-users';
 
     public static function form(Form $form): Form
@@ -34,9 +33,9 @@ class UserResource extends Resource
                     ->maxLength(255),
                 Forms\Components\DateTimePicker::make('email_verified_at'),
                 Forms\Components\TextInput::make('password')
-                    ->password()
-                    ->required()
-                    ->maxLength(255),
+                ->password()
+                ->required()
+                ->maxLength(75), // Only required when creating a new record
                 Forms\Components\Select::make('roles')
                     ->searchable()
                     ->relationship('roles', 'name') // Define relationship if you have it

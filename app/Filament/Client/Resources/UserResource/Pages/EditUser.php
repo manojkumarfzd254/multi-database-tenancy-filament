@@ -10,6 +10,11 @@ class EditUser extends EditRecord
 {
     protected static string $resource = UserResource::class;
 
+    public function getTitle(): string
+    {
+        return 'Edit Staff'; // Custom page label
+    }
+
     protected function getHeaderActions(): array
     {
         return [
