@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Project extends Model
 {
@@ -12,5 +13,11 @@ class Project extends Model
         'supported_documents' => 'array',
         'assign_to'=>'array',
     ];
+
+
+    public function projectSprints(): HasMany
+    {
+        return $this->hasMany(ProjectSprint::class);
+    }
 
 }

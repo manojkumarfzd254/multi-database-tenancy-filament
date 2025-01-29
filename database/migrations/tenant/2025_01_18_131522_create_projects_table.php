@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('project_name',150)->nullable();
             $table->string('project_logo')->nullable();
+            $table->string('project_url',500)->nullable();
+            $table->string('demo_project_url',500)->nullable();
             $table->jsonb('supported_documents')->nullable();
             $table->text('project_description')->nullable();
             $table->date('start_date')->nullable();

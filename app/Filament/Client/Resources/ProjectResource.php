@@ -9,6 +9,7 @@ use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -33,6 +34,7 @@ class ProjectResource extends Resource
                         ->required()
                         ->maxLength(50)
                         ->columnSpan(4),
+
                     Forms\Components\DatePicker::make('start_date')
                         ->label('Start Date')
                         ->required()
@@ -62,6 +64,14 @@ class ProjectResource extends Resource
                         ->default('none')
                         ->placeholder('Select Status')
                         ->columnSpan(4),
+                    TextInput::make('project_url')
+                        ->label('Project Url')
+                        ->maxLength(50)
+                        ->columnSpan(6),
+                    TextInput::make('demo_project_url')
+                        ->label('Project Url')
+                        ->maxLength(50)
+                        ->columnSpan(6),
                     Select::make('assign_to')
                         ->label('Project Assign to')
                         ->multiple()
@@ -73,11 +83,10 @@ class ProjectResource extends Resource
                                     return [$user->id => "{$user->name} ({$roles})"];
                                 });
                         })
-                        ->searchable()->columnSpan(12),
+                        ->searchable()->columnSpan(6),
                     RichEditor::make('project_description')->disableToolbarButtons([
                         'attachFiles',
                     ])->columnSpan(12),
-
                 ])
                     ->columns(12),
             ]);
@@ -89,10 +98,13 @@ class ProjectResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('project_name')
                     ->searchable(),
+                    Tables\Columns\TextColumn::make('project_url')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('start_date')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('end_date')
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('status')
                     ->badge()
                     ->color(fn(string $state): string => match ($state) {
